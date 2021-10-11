@@ -3,7 +3,7 @@
 for X in `seq 1 49`; do
 qsub -cwd \
      -V \
-     -N "b" \
+     -N "b_run_archie_v1" \
      -l h_data=32G,time=8:00:00,highp \
      -m e \
      -t $X \
