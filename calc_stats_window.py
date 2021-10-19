@@ -86,6 +86,8 @@ def label(bases, snp_list, n_sites, arch_thresh, not_arch_thresh):
         previous_pos = s
         previous_anc = base
     prop = archaic_anc/n_sites
+    # print(archaic_anc)
+    # print(n_sites)
     if prop > arch_thresh:
         return([1,0,0, prop])
     elif prop < not_arch_thresh:
@@ -110,7 +112,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        mutation_positions = parse_snp(args.snp)
+        mutation_positions = parse_snp(args.snp) # here is mutation positions
     except FileNotFoundError:
         print("Error reading SNP file. Check file path.", file=sys.stderr)
         sys.exit(1)
@@ -142,7 +144,7 @@ if __name__ == "__main__":
 
     if args.label:
         try:
-            arch = parse_anc(args.anc, n_samples)
+            arch = parse_anc(args.anc, n_samples) #here is arch
         except FileNotFoundError:
             print("Error reading anc file. Check file path.", file=sys.stderr)
             sys.exit(1)
@@ -184,8 +186,8 @@ if __name__ == "__main__":
 
             output = dist + min_d + n_priv + [inds[focal_idx]] + [args.chrom] + [start] + [end] # need to put scalar elements into array to concatenate
             if args.label:
-                focal_arch = [row[focal_idx] for row in arch ]
-                lab = label(focal_arch, mutation_positions, n_sites, 0.7, 0.3)
+                focal_arch = [row[focal_idx] for row in arch ][start_idx:end_idx+1] # here is focal arch
+                lab = label(focal_arch, mutation_positions[start_idx:end_idx+1], window, 0.7, 0.3) #mutation positions is just list of pos
                 output = output + lab
 
             print(*output, sep="\t") # print stats to standard out
