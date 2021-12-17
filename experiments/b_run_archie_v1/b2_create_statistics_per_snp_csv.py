@@ -39,5 +39,5 @@ for r in rs:
 
 
 df = pandas.concat(dfs, sort=False)
-df.to_csv(path + "/archie_statistics_per_snp.csv", 
+df.to_csv("../c_summarize/csvs/archie_statistics_per_snp.csv", 
           sep=",", index=None, na_rep="NA")
